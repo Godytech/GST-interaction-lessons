@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communication & Language Studies</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --white: #ffffff;
+  --off-white: #fafaf8;
+  --cream: #f5f0e8;
+  --ink: #1a1a2e;
+  --ink-light: #3d3d5c;
+  --teal: #0d9488;
+  --teal-light: #ccfbf1;
+  --teal-dark: #0f766e;
+  --amber: #d97706;
+  --amber-light: #fef3c7;
+  --rose: #e11d48;
+  --rose-light: #ffe4e6;
+  --indigo: #4f46e5;
+  --indigo-light: #e0e7ff;
+  --slate: #64748b;
+  --slate-light: #f1f5f9;
+  --border: #e2e8f0;
+  --shadow: 0 4px 24px rgba(26,26,46,0.08);
+  --shadow-lg: 0 8px 48px rgba(26,26,46,0.12);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ─── SPLASH / WELCOME ─────────────────────────────── */
+#splash {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 50%, #ecfdf5 100%);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+#splash::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(13,148,136,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+#splash::after {
+  content: '';
+  position: absolute;
+  bottom: -80px; left: -80px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(217,119,6,0.07) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.splash-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  padding: 6px 16px;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+
+.splash-badge::before { content: '◆'; font-size: 0.6rem; }
+
+#splash h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.15;
+  max-width: 700px;
+  margin-bottom: 1.5rem;
+}
+
+#splash h1 span { color: var(--teal); }
+
+#splash p {
+  font-size: 1.1rem;
+  color: var(--ink-light);
+  max-width: 520px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+.name-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 420px;
+  margin-bottom: 1.5rem;
+}
+
+.name-input-group label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--ink-light);
+  letter-spacing: 0.03em;
+}
+
+.name-input-group input {
+  width: 100%;
+  padding: 14px 20px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.name-input-group input:focus { border-color: var(--teal); }
+
+.btn-primary {
+  background: var(--teal);
+  color: white;
+  border: none;
+  padding: 14px 36px;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+.btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.splash-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.stat-item {
+  text-align: center;
+}
+.stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+/* ─── MAIN APP ───────────────────────────────────────── */
+#app { display: none; }
+
+.app-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 12px rgba(0,0,0,0.05);
+}
+
+.header-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.header-brand span { color: var(--teal); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.student-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--slate-light);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-light);
+}
+.student-pill::before { content: '👤'; font-size: 0.9rem; }
+
+.progress-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--teal-light);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--teal-dark);
+}
+
+/* ─── LAYOUT ────────────────────────────────────────── */
+.app-body {
+  display: flex;
+  min-height: calc(100vh - 64px);
+}
+
+/* ─── SIDEBAR ───────────────────────────────────────── */
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  background: var(--off-white);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 1.5rem 0;
+  max-height: calc(100vh - 64px);
+  position: sticky;
+  top: 64px;
+}
+
+.sidebar-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--slate);
+  padding: 0 1.5rem 0.75rem;
+}
+
+.chapter-item {
+  border-bottom: 1px solid var(--border);
+}
+
+.chapter-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 1.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.chapter-header:hover { background: #f0f9ff; }
+.chapter-header.active { background: var(--teal-light); }
+
+.chapter-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: var(--border);
+  color: var(--slate);
+  transition: all 0.2s;
+}
+.chapter-num.done { background: var(--teal); color: white; }
+.chapter-num.active { background: var(--teal); color: white; }
+
+.chapter-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-light);
+  flex: 1;
+  line-height: 1.3;
+}
+.chapter-name.active { color: var(--teal-dark); font-weight: 600; }
+
+.chapter-arrow {
+  font-size: 0.7rem;
+  color: var(--slate);
+  transition: transform 0.2s;
+}
+.chapter-arrow.open { transform: rotate(90deg); }
+
+.topics-list {
+  display: none;
+  padding: 4px 0 8px;
+  background: white;
+}
+.topics-list.open { display: block; }
+
+.topic-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 1.5rem 7px 3rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--slate);
+  transition: all 0.15s;
+  border-left: 3px solid transparent;
+}
+.topic-item:hover { background: var(--slate-light); color: var(--ink); }
+.topic-item.active { background: #f0fdf9; color: var(--teal-dark); border-left-color: var(--teal); font-weight: 500; }
+.topic-item.done { color: var(--teal-dark); }
+.topic-item.done::before { content: '✓'; color: var(--teal); font-size: 0.75rem; margin-right: 2px; font-weight: 700; }
+.topic-item:not(.done)::before { content: '·'; color: var(--slate); font-size: 1rem; margin-right: 2px; }
+
+/* ─── MAIN CONTENT ──────────────────────────────────── */
+.main-content {
+  flex: 1;
+  padding: 2.5rem;
+  max-width: 860px;
+  min-height: calc(100vh - 64px);
+}
+
+/* ─── VIEWS ─────────────────────────────────────────── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* Chapter Overview */
+.chapter-overview {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.chapter-overview .big-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--teal-light);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.chapter-overview h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.chapter-overview p {
+  color: var(--slate);
+  max-width: 500px;
+  margin: 0 auto 2.5rem;
+}
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
+}
+.topic-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  color: var(--ink-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.topic-card:hover { border-color: var(--teal); color: var(--teal-dark); background: var(--teal-light); }
+.topic-card .tc-num { font-weight: 700; color: var(--teal); font-size: 0.75rem; }
+
+/* Lesson View */
+.lesson-header {
+  margin-bottom: 2rem;
+}
+.breadcrumb {
+  font-size: 0.8rem;
+  color: var(--slate);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.breadcrumb span { color: var(--teal); font-weight: 500; }
+
+.lesson-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+.lesson-tag {
+  background: var(--teal-light);
+  color: var(--teal-dark);
+  padding: 4px 12px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.lesson-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-divider {
+  height: 3px;
+  width: 60px;
+  background: linear-gradient(90deg, var(--teal), var(--amber));
+  border-radius: 2px;
+  margin-bottom: 2rem;
+}
+
+.lesson-body {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 2.5rem;
+  min-height: 300px;
+  line-height: 1.85;
+  font-size: 1rem;
+  color: var(--ink-light);
+}
+
+.lesson-body.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--slate);
+  font-style: italic;
+}
+
+.lesson-body h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin: 1.5rem 0 0.5rem;
+}
+.lesson-body h3:first-child { margin-top: 0; }
+.lesson-body p { margin-bottom: 1rem; }
+.lesson-body ul, .lesson-body ol { padding-left: 1.5rem; margin-bottom: 1rem; }
+.lesson-body li { margin-bottom: 0.4rem; }
+.lesson-body strong { color: var(--ink); font-weight: 600; }
+.lesson-body em { color: var(--teal-dark); font-style: italic; }
+.lesson-body blockquote {
+  border-left: 3px solid var(--teal);
+  padding: 0.5rem 1rem;
+  background: var(--teal-light);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 1rem 0;
+  color: var(--teal-dark);
+  font-style: italic;
+}
+
+.lesson-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  align-items: center;
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--teal);
+  border: 2px solid var(--teal);
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--teal-light); }
+
+.btn-amber {
+  background: var(--amber);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-amber:hover { background: #b45309; transform: translateY(-2px); }
+.btn-amber:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* ─── QUIZ ──────────────────────────────────────────── */
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.quiz-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  color: var(--ink);
+}
+
+.quiz-progress-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--indigo));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.quiz-counter {
+  font-size: 0.85rem;
+  color: var(--slate);
+  font-weight: 500;
+  text-align: right;
+}
+
+.question-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.question-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--teal);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.75rem;
+}
+
+.question-text {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.options-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+  cursor: pointer;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink-light);
+  transition: all 0.2s;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--teal); background: var(--teal-light); color: var(--teal-dark); }
+.option-btn:disabled { cursor: default; }
+.option-btn.correct { border-color: var(--teal); background: var(--teal-light); color: var(--teal-dark); font-weight: 500; }
+.option-btn.wrong { border-color: var(--rose); background: var(--rose-light); color: var(--rose); }
+
+.opt-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--slate-light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+.option-btn.correct .opt-letter { background: var(--teal); color: white; }
+.option-btn.wrong .opt-letter { background: var(--rose); color: white; }
+
+.feedback-box {
+  margin-top: 1rem;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: none;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct { background: var(--teal-light); color: var(--teal-dark); }
+.feedback-box.wrong { background: var(--rose-light); color: var(--rose); }
+
+/* ─── RESULTS ───────────────────────────────────────── */
+.results-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.score-circle {
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  margin: 0 auto 2rem;
+  position: relative;
+}
+.score-circle.excellent { background: linear-gradient(135deg, var(--teal-light), #a7f3d0); border: 4px solid var(--teal); }
+.score-circle.good { background: linear-gradient(135deg, var(--indigo-light), #c7d2fe); border: 4px solid var(--indigo); }
+.score-circle.fair { background: linear-gradient(135deg, var(--amber-light), #fde68a); border: 4px solid var(--amber); }
+.score-circle.poor { background: linear-gradient(135deg, var(--rose-light), #fecdd3); border: 4px solid var(--rose); }
+
+.score-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+.score-denom { font-size: 1rem; color: var(--slate); }
+
+.results-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  margin-bottom: 0.75rem;
+  color: var(--ink);
+}
+.results-msg { color: var(--slate); margin-bottom: 2rem; }
+
+.results-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+/* ─── REVISION ──────────────────────────────────────── */
+.revision-card {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 2.5rem;
+  margin-bottom: 1.5rem;
+}
+.revision-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.revision-card h3::before {
+  content: '📖';
+  font-size: 1.2rem;
+}
+
+/* ─── CHAPTER COMPLETE ──────────────────────────────── */
+.chapter-complete {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.trophy { font-size: 5rem; margin-bottom: 1rem; }
+.chapter-complete h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.chapter-complete p { color: var(--slate); max-width: 500px; margin: 0 auto 2.5rem; }
+.chapter-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.cs-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem 2rem;
+  min-width: 130px;
+}
+.cs-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--teal);
+}
+.cs-label { font-size: 0.8rem; color: var(--slate); margin-top: 4px; }
+
+/* ─── FINAL REVIEW ──────────────────────────────────── */
+.final-review-intro {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+.final-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--amber-light), var(--teal-light));
+  color: var(--ink);
+  padding: 8px 20px;
+  border-radius: 99px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* ─── LOADING SPINNER ───────────────────────────────── */
+.spinner {
+  width: 20px; height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--teal);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── GLOBAL PROGRESS ───────────────────────────────── */
+.global-progress {
+  background: var(--off-white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.gp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.gp-bar-wrap {
+  background: var(--border);
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+.gp-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal), var(--indigo));
+  border-radius: 5px;
+  transition: width 0.5s;
+}
+.gp-label { font-size: 0.85rem; color: var(--slate); }
+
+/* ─── UTILS ─────────────────────────────────────────── */
+.hidden { display: none !important; }
+.mt-2 { margin-top: 2rem; }
+.text-center { text-align: center; }
+.text-teal { color: var(--teal); }
+.text-slate { color: var(--slate); }
+
+/* ─── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main-content { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-badge">Interactive Learning Platform</div>
+  <h1>Master <span>Communication</span> & Language Studies</h1>
+  <p>A structured journey through 13 chapters — lessons, quizzes, revisions, and mastery reviews, all in one place.</p>
+  <div class="name-input-group">
+    <label for="studentName">Enter your name to begin</label>
+    <input type="text" id="studentName" placeholder="Your full name..." maxlength="60" />
+  </div>
+  <button class="btn-primary" id="startBtn" onclick="startApp()">Begin Learning Journey →</button>
+  <div class="splash-stats">
+    <div class="stat-item"><div class="stat-num">13</div><div class="stat-label">Chapters</div></div>
+    <div class="stat-item"><div class="stat-num">76</div><div class="stat-label">Topics</div></div>
+    <div class="stat-item"><div class="stat-num">1216+</div><div class="stat-label">Quiz Questions</div></div>
+    <div class="stat-item"><div class="stat-num">200</div><div class="stat-label">Final Review Qs</div></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <header class="app-header">
+    <div class="header-brand">Comm<span>&</span>Lang</div>
+    <div class="header-right">
+      <div class="student-pill" id="headerStudentName"></div>
+      <div class="progress-pill" id="headerProgress">0% Complete</div>
+    </div>
+  </header>
+  <div class="app-body">
+    <nav class="sidebar" id="sidebar"></nav>
+    <main class="main-content" id="mainContent">
+      <!-- Content renders here -->
+    </main>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  DATA STRUCTURE
+// ═══════════════════════════════════════════════════════
+
+const CURRICULUM = [
+  {
+    id: 1, title: "Art of Communication",
+    topics: [
+      "Towards definition",
+      "Kinds of communication",
+      "Modes of communication",
+      "Elements of communication",
+      "The Process of communication",
+      "The purposes of communication",
+      "Methods of communication",
+      "Principles of communication",
+      "Barriers of Effective communication"
+    ]
+  },
+  {
+    id: 2, title: "Language Skills and Effective Communication",
+    topics: [
+      "Preamble",
+      "Listening skills",
+      "Speaking Skills",
+      "Reading Skills",
+      "Writing Skills: Note-taking and Note-making"
+    ]
+  },
+  {
+    id: 3, title: "Other kinds of Writing: Letter writing",
+    topics: [
+      "Preamble",
+      "The formal Letter",
+      "The informal Letter",
+      "The Semi-formal Letter"
+    ]
+  },
+  {
+    id: 4, title: "Report Writing",
+    topics: [
+      "Types of Report",
+      "Qualities of good report",
+      "Report presentation Format",
+      "Other kinds of report"
+    ]
+  },
+  {
+    id: 5, title: "Book Review and Minute Writing",
+    topics: [
+      "Preamble",
+      "Relevant data",
+      "Procedure of Review",
+      "Minutes Writing"
+    ]
+  },
+  {
+    id: 6, title: "Essay Writing",
+    topics: [
+      "Preamble",
+      "General hints on Writing a Good essay",
+      "Parts of the essay",
+      "Essay types",
+      "Paragraph development in Essay",
+      "Stages in writing the Essay"
+    ]
+  },
+  {
+    id: 7, title: "The Sentence",
+    topics: [
+      "Definition of Sentence",
+      "Types of sentence",
+      "Parts of the Sentence",
+      "Problems of sentence construction",
+      "Sentence Patterns"
+    ]
+  },
+  {
+    id: 8, title: "Sounds of English",
+    topics: [
+      "Preamble",
+      "English Vowel sounds",
+      "English consonant sounds",
+      "Stressed syllables",
+      "Intonation Patterns"
+    ]
+  },
+  {
+    id: 9, title: "Word Formation Processes",
+    topics: [
+      "Preamble",
+      "Inflection",
+      "Derivation",
+      "Clipping",
+      "Blending",
+      "Acronyms",
+      "Compounding",
+      "Affixation"
+    ]
+  },
+  {
+    id: 10, title: "Rhetoric/Public Speaking",
+    topics: [
+      "Rhetoric/Public Speaking",
+      "Brief history of Rhetoric",
+      "Why study rhetoric and public Speaking",
+      "Some benefits of Studying rhetoric and public Speaking",
+      "Basic characteristics of Public Speaking",
+      "Preparing the speech",
+      "Basic Phonetics",
+      "Characteristics of Style",
+      "Improving Your Style",
+      "Language and Situation: Style and occasion",
+      "Elements of Style",
+      "Delivering the Speech"
+    ]
+  },
+  {
+    id: 11, title: "Communication Technology and Modern Language Learning",
+    topics: [
+      "Preamble",
+      "What is communication?",
+      "Types of communication",
+      "Functions of mass media",
+      "Information and Communication Technologies (ICTs)",
+      "The roles of the ICTs in Modern language"
+    ]
+  },
+  {
+    id: 12, title: "Logical Thinking and Reasoning Methods",
+    topics: [
+      "Preamble",
+      "Logical thinking",
+      "Thinking and Reasoning",
+      "Association",
+      "Tricky terms",
+      "Some terms connected to argument",
+      "Distinctions between facts and Opinions",
+      "Language and Syllogism",
+      "Reasoning Methods",
+      "What is fallacy?",
+      "Analogy, Generalisation and explanation in Logical Reasoning"
+    ]
+  },
+  {
+    id: 13, title: "Ethical Considerations",
+    topics: [
+      "Preamble",
+      "Ethics, Educational Research and Examination",
+      "Ethical issues in Research",
+      "Examination Ethics",
+      "The meaning of Examination",
+      "Examination malpractice",
+      "Forms of examination Malpractice"
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+
+let state = {
+  studentName: '',
+  currentChapter: 0,
+  currentTopic: 0,
+  currentView: 'overview', // overview | lesson | quiz | results | revision | chapterComplete | finalReview | finalResults
+  completedTopics: {}, // "ch-tp": true
+  topicScores: {},     // "ch-tp": { score, total, wrong: [] }
+  quizData: null,
+  currentQuestionIndex: 0,
+  selectedAnswers: [],
+  lessonText: '',
+  finalQuestions: null,
+  finalAnswers: [],
+  finalQuestionIndex: 0,
+  finalScore: 0,
+  revisionText: '',
+};
+
+function topicKey(ch, tp) { return `${ch}-${tp}`; }
+
+function totalTopics() {
+  return CURRICULUM.reduce((s, c) => s + c.topics.length, 0);
+}
+
+function completedCount() {
+  return Object.keys(state.completedTopics).length;
+}
+
+function progressPct() {
+  return Math.round((completedCount() / totalTopics()) * 100);
+}
+
+function allChaptersComplete() {
+  for (const ch of CURRICULUM) {
+    for (let t = 0; t < ch.topics.length; t++) {
+      if (!state.completedTopics[topicKey(ch.id, t)]) return false;
+    }
+  }
+  return true;
+}
+
+function chapterComplete(chIdx) {
+  const ch = CURRICULUM[chIdx];
+  for (let t = 0; t < ch.topics.length; t++) {
+    if (!state.completedTopics[topicKey(ch.id, t)]) return false;
+  }
+  return true;
+}
+
+// ═══════════════════════════════════════════════════════
+//  API
+// ═══════════════════════════════════════════════════════
+
+async function callClaude(prompt, maxTokens = 1200) {
+  const response = await fetch('/api/claude', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt, maxTokens })
+  });
+
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.error || 'API error');
+  }
+
+  const data = await response.json();
+  return data.text || '';
+}
+
+async function generateLesson(chapterTitle, topicTitle) {
+  return await callClaude(
+    `You are a university lecturer teaching a course on Communication and Language Studies in Nigeria. 
+Write a comprehensive lesson for students on the topic: "${topicTitle}" from Chapter: "${chapterTitle}".
+
+Structure your lesson clearly with:
+- An introduction/definition
+- Key concepts with clear explanations
+- Examples relevant to Nigerian/African context where appropriate  
+- Important points to remember
+- Summary
+
+Use <h3> for subheadings, <p> for paragraphs, <ul>/<li> for lists, <strong> for key terms, <em> for emphasis, <blockquote> for notable definitions or quotes.
+Write 400-600 words. Be educationally thorough but accessible for undergraduate students.`, 1400);
+}
+
+async function generateQuestions(chapterTitle, topicTitle) {
+  const raw = await callClaude(
+    `You are a university examiner creating 16 multiple-choice questions for the topic: "${topicTitle}" from "${chapterTitle}".
+
+Return ONLY valid JSON — no markdown, no explanation, just pure JSON.
+Format:
+[
+  {
+    "q": "Question text?",
+    "opts": ["Option A", "Option B", "Option C", "Option D"],
+    "ans": 0
+  }
+]
+
+Rules:
+- "ans" is the 0-based index of the correct answer
+- Make questions test genuine understanding, not just memorisation
+- Vary difficulty: mix easy, medium, and challenging questions
+- Ensure all 4 options are plausible
+- Questions should cover different aspects of the topic
+- Return exactly 16 questions`, 2800);
+  
+  try {
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const start = clean.indexOf('[');
+    const end = clean.lastIndexOf(']');
+    return JSON.parse(clean.slice(start, end + 1));
+  } catch(e) {
+    // fallback: return a single placeholder question
+    return Array(16).fill(null).map((_, i) => ({
+      q: `Question ${i+1}: Which of the following best describes an aspect of "${topicTitle}"?`,
+      opts: ["Option A — First choice", "Option B — Second choice", "Option C — Third choice", "Option D — Fourth choice"],
+      ans: 0
+    }));
+  }
+}
+
+async function generateRevision(chapterTitle, topicTitle, wrongQuestions) {
+  const wrongStr = wrongQuestions.length > 0 
+    ? `The student answered these questions incorrectly: ${wrongQuestions.join('; ')}`
+    : 'The student answered all questions correctly!';
+  
+  return await callClaude(
+    `You are a tutor providing a revision class for a student who just completed a quiz on "${topicTitle}" from "${chapterTitle}".
+
+${wrongStr}
+
+Write a targeted revision lesson that:
+1. Reinforces the most important concepts from this topic
+2. Addresses any areas where students commonly struggle
+3. Provides additional examples or mnemonics to aid memory
+4. Ends with 3-5 key takeaways
+
+Use <h3> tags for sections, <p> for paragraphs, <ul><li> for lists, <strong> for key terms.
+Keep it concise but comprehensive — about 300-400 words.`, 1000);
+}
+
+async function generateFinalReview() {
+  const topicsList = CURRICULUM.map(ch => 
+    `Chapter ${ch.id}: ${ch.title} — Topics: ${ch.topics.join(', ')}`
+  ).join('\n');
+
+  const raw = await callClaude(
+    `You are a university examiner creating a comprehensive final review of 200 multiple-choice questions covering ALL topics in a Communication and Language Studies course.
+
+The course covers:
+${topicsList}
+
+Return ONLY valid JSON array — no markdown, no explanation.
+Format:
+[{"q": "...", "opts": ["A","B","C","D"], "ans": 0}, ...]
+
+Rules:
+- Distribute questions proportionally across all 13 chapters
+- Each chapter should have approximately 15-16 questions
+- Cover all major topics from every chapter
+- Mix easy, medium, and hard questions
+- Return exactly 200 questions`, 8000);
+  
+  try {
+    const clean = raw.replace(/```json|```/g, '').trim();
+    const start = clean.indexOf('[');
+    const end = clean.lastIndexOf(']');
+    return JSON.parse(clean.slice(start, end + 1));
+  } catch(e) {
+    return [];
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  RENDER FUNCTIONS
+// ═══════════════════════════════════════════════════════
+
+function renderSidebar() {
+  const sb = document.getElementById('sidebar');
+  let html = `<div class="sidebar-title">Course Chapters</div>`;
+  
+  for (const ch of CURRICULUM) {
+    const isActiveChap = state.currentChapter === (ch.id - 1);
+    const isDone = chapterComplete(ch.id - 1);
+    
+    html += `
+    <div class="chapter-item">
+      <div class="chapter-header ${isActiveChap ? 'active' : ''}" onclick="toggleChapter(${ch.id-1})">
+        <div class="chapter-num ${isDone ? 'done' : (isActiveChap ? 'active' : '')}">${isDone ? '✓' : ch.id}</div>
+        <div class="chapter-name ${isActiveChap ? 'active' : ''}">${ch.title}</div>
+        <div class="chapter-arrow ${isActiveChap ? 'open' : ''}" id="arrow-${ch.id-1}">▶</div>
+      </div>
+      <div class="topics-list ${isActiveChap ? 'open' : ''}" id="topics-${ch.id-1}">`;
+    
+    ch.topics.forEach((tp, ti) => {
+      const key = topicKey(ch.id, ti);
+      const done = !!state.completedTopics[key];
+      const isActiveTopic = isActiveChap && state.currentTopic === ti;
+      html += `<div class="topic-item ${done ? 'done' : ''} ${isActiveTopic ? 'active' : ''}" onclick="navToTopic(${ch.id-1}, ${ti})">${tp}</div>`;
+    });
+    
+    html += `</div></div>`;
+  }
+
+  if (allChaptersComplete()) {
+    html += `<div class="chapter-item">
+      <div class="chapter-header ${state.currentView === 'finalReview' || state.currentView === 'finalResults' ? 'active' : ''}" onclick="startFinalReview()">
+        <div class="chapter-num done">★</div>
+        <div class="chapter-name active">Final Review (200 Qs)</div>
+      </div>
+    </div>`;
+  }
+  
+  sb.innerHTML = html;
+}
+
+function toggleChapter(idx) {
+  const topicsList = document.getElementById(`topics-${idx}`);
+  const arrow = document.getElementById(`arrow-${idx}`);
+  if (!topicsList) return;
+  topicsList.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+function navToTopic(chIdx, tIdx) {
+  state.currentChapter = chIdx;
+  state.currentTopic = tIdx;
+  state.currentView = 'lesson';
+  renderSidebar();
+  showLesson();
+}
+
+function updateHeaderProgress() {
+  document.getElementById('headerProgress').textContent = `${progressPct()}% Complete`;
+}
+
+// ─── OVERVIEW ──────────────────────────────────────────
+function showChapterOverview(chIdx) {
+  const ch = CURRICULUM[chIdx];
+  state.currentChapter = chIdx;
+  state.currentView = 'overview';
+  
+  let topicsHtml = ch.topics.map((tp, i) => {
+    const done = !!state.completedTopics[topicKey(ch.id, i)];
+    return `<div class="topic-card" onclick="navToTopic(${chIdx}, ${i})">
+      <span class="tc-num">${done ? '✓' : (i+1) + '.'}</span>${tp}
+    </div>`;
+  }).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div class="chapter-overview">
+      <div class="big-num">${String(ch.id).padStart(2, '0')}</div>
+      <h2>${ch.title}</h2>
+      <p>This chapter contains ${ch.topics.length} topics. Work through each topic, complete the quiz, and receive revision guidance before moving on.</p>
+      <div class="topic-grid">${topicsHtml}</div>
+      <button class="btn-primary" onclick="navToTopic(${chIdx}, 0)">Start Chapter →</button>
+    </div>`;
+}
+
+// ─── LESSON ────────────────────────────────────────────
+async function showLesson() {
+  const ch = CURRICULUM[state.currentChapter];
+  const tp = ch.topics[state.currentTopic];
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="lesson-header">
+      <div class="breadcrumb">Chapter ${ch.id} <span>›</span> <span>${tp}</span></div>
+      <div class="lesson-meta"><span class="lesson-tag">Lesson</span></div>
+      <div class="lesson-title">${tp}</div>
+      <div class="lesson-divider"></div>
+    </div>
+    <div class="lesson-body loading" id="lessonBody">
+      <div class="spinner"></div> Generating your lesson, please wait…
+    </div>
+    <div class="lesson-actions hidden" id="lessonActions">
+      <button class="btn-amber" onclick="startQuiz()">Take Quiz on This Topic →</button>
+    </div>`;
+  
+  try {
+    const lessonHtml = await generateLesson(ch.title, tp);
+    state.lessonText = lessonHtml;
+    const body = document.getElementById('lessonBody');
+    body.classList.remove('loading');
+    body.innerHTML = lessonHtml;
+    document.getElementById('lessonActions').classList.remove('hidden');
+  } catch(e) {
+    document.getElementById('lessonBody').innerHTML = '<p>Unable to load lesson. Please check your connection and try again.</p>';
+  }
+}
+
+// ─── QUIZ ───────────────────────────────────────────────
+async function startQuiz() {
+  const ch = CURRICULUM[state.currentChapter];
+  const tp = ch.topics[state.currentTopic];
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="text-center" style="padding:4rem">
+      <div class="spinner" style="width:40px;height:40px;border-width:3px;margin:0 auto 1rem"></div>
+      <p class="text-slate">Generating 16 questions on <strong>${tp}</strong>…</p>
+    </div>`;
+  
+  try {
+    const questions = await generateQuestions(ch.title, tp);
+    state.quizData = questions;
+    state.currentQuestionIndex = 0;
+    state.selectedAnswers = [];
+    state.currentView = 'quiz';
+    renderQuestion();
+  } catch(e) {
+    document.getElementById('mainContent').innerHTML = '<p style="padding:2rem;color:var(--rose)">Error generating questions. Please try again.</p>';
+  }
+}
+
+function renderQuestion() {
+  const q = state.quizData[state.currentQuestionIndex];
+  const total = state.quizData.length;
+  const current = state.currentQuestionIndex + 1;
+  const pct = Math.round(((current-1) / total) * 100);
+  const ch = CURRICULUM[state.currentChapter];
+  const tp = ch.topics[state.currentTopic];
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="quiz-header">
+      <div class="quiz-title">Quiz: ${tp}</div>
+      <div style="min-width:200px">
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+        <div class="quiz-counter">Question ${current} of ${total}</div>
+      </div>
+    </div>
+    <div class="question-card">
+      <div class="question-num">Question ${current}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options-grid">
+        ${q.opts.map((opt, i) => `
+          <button class="option-btn" id="opt-${i}" onclick="selectAnswer(${i})">
+            <span class="opt-letter">${'ABCD'[i]}</span>
+            <span>${opt}</span>
+          </button>`).join('')}
+      </div>
+      <div class="feedback-box" id="feedback"></div>
+    </div>
+    <button class="btn-primary hidden" id="nextBtn" onclick="nextQuestion()">
+      ${state.currentQuestionIndex < state.quizData.length - 1 ? 'Next Question →' : 'View Results →'}
+    </button>`;
+}
+
+function selectAnswer(idx) {
+  const q = state.quizData[state.currentQuestionIndex];
+  const correct = q.ans;
+  
+  // Disable all buttons
+  q.opts.forEach((_, i) => {
+    const btn = document.getElementById(`opt-${i}`);
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    else if (i === idx && idx !== correct) btn.classList.add('wrong');
+  });
+  
+  state.selectedAnswers.push({ chosen: idx, correct: idx === correct, question: q.q });
+  
+  const fb = document.getElementById('feedback');
+  fb.classList.add('show');
+  if (idx === correct) {
+    fb.classList.add('correct');
+    fb.textContent = '✓ Correct! Well done.';
+  } else {
+    fb.classList.add('wrong');
+    fb.textContent = `✗ Incorrect. The correct answer is: ${q.opts[correct]}`;
+  }
+  
+  document.getElementById('nextBtn').classList.remove('hidden');
+}
+
+function nextQuestion() {
+  if (state.currentQuestionIndex < state.quizData.length - 1) {
+    state.currentQuestionIndex++;
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+// ─── RESULTS ───────────────────────────────────────────
+function showResults() {
+  const score = state.selectedAnswers.filter(a => a.correct).length;
+  const total = state.quizData.length;
+  const pct = Math.round((score / total) * 100);
+  const ch = CURRICULUM[state.currentChapter];
+  const tp = ch.topics[state.currentTopic];
+  const key = topicKey(ch.id, state.currentTopic);
+  
+  const wrong = state.selectedAnswers.filter(a => !a.correct).map(a => a.question);
+  state.topicScores[key] = { score, total, wrong };
+  
+  let grade, msg, circleClass;
+  if (pct >= 80) { grade = 'Excellent'; msg = 'Outstanding performance! You have a strong grasp of this topic.'; circleClass = 'excellent'; }
+  else if (pct >= 65) { grade = 'Good'; msg = 'Good work! Review the revision notes to solidify your understanding.'; circleClass = 'good'; }
+  else if (pct >= 50) { grade = 'Fair'; msg = 'You passed, but the revision class will help reinforce key concepts.'; circleClass = 'fair'; }
+  else { grade = 'Needs Work'; msg = 'Please review the revision class carefully before moving on.'; circleClass = 'poor'; }
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="results-card">
+      <h2 style="font-family:'Playfair Display',serif;margin-bottom:1.5rem;color:var(--ink)">Quiz Results</h2>
+      <div class="score-circle ${circleClass}">
+        <div class="score-num">${score}</div>
+        <div class="score-denom">out of ${total}</div>
+      </div>
+      <div class="results-title">${grade}</div>
+      <p class="results-msg">${msg} <br><strong>${pct}%</strong> — ${score} correct, ${total - score} incorrect.</p>
+      <div class="results-actions">
+        <button class="btn-secondary" onclick="showLesson()">Re-read Lesson</button>
+        <button class="btn-primary" onclick="showRevision()">Revision Class →</button>
+      </div>
+    </div>`;
+}
+
+// ─── REVISION ──────────────────────────────────────────
+async function showRevision() {
+  const ch = CURRICULUM[state.currentChapter];
+  const tp = ch.topics[state.currentTopic];
+  const key = topicKey(ch.id, state.currentTopic);
+  const scores = state.topicScores[key];
+  const wrong = scores ? scores.wrong : [];
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="lesson-header">
+      <div class="breadcrumb">Chapter ${ch.id} <span>›</span> <span>${tp}</span></div>
+      <div class="lesson-meta"><span class="lesson-tag" style="background:var(--amber-light);color:var(--amber)">Revision</span></div>
+      <div class="lesson-title">Revision: ${tp}</div>
+      <div class="lesson-divider" style="background:linear-gradient(90deg,var(--amber),var(--rose))"></div>
+    </div>
+    <div class="revision-card">
+      <div class="lesson-body loading" id="revisionBody">
+        <div class="spinner"></div> Preparing your personalised revision…
+      </div>
+    </div>
+    <div class="lesson-actions hidden" id="revisionActions">
+      <button class="btn-primary" onclick="markTopicComplete()">Mark Complete & Continue →</button>
+    </div>`;
+  
+  try {
+    const revText = await generateRevision(ch.title, tp, wrong);
+    const body = document.getElementById('revisionBody');
+    body.classList.remove('loading');
+    body.innerHTML = revText;
+    document.getElementById('revisionActions').classList.remove('hidden');
+  } catch(e) {
+    document.getElementById('revisionBody').innerHTML = '<p>Could not load revision. Please try again.</p>';
+  }
+}
+
+// ─── MARK COMPLETE ─────────────────────────────────────
+function markTopicComplete() {
+  const ch = CURRICULUM[state.currentChapter];
+  const key = topicKey(ch.id, state.currentTopic);
+  state.completedTopics[key] = true;
+  updateHeaderProgress();
+  renderSidebar();
+  
+  const nextTopicIdx = state.currentTopic + 1;
+  
+  if (nextTopicIdx < ch.topics.length) {
+    // More topics in this chapter
+    state.currentTopic = nextTopicIdx;
+    showNextTopicPrompt(ch, nextTopicIdx);
+  } else {
+    // Chapter complete
+    showChapterComplete();
+  }
+}
+
+function showNextTopicPrompt(ch, nextIdx) {
+  document.getElementById('mainContent').innerHTML = `
+    <div class="chapter-complete">
+      <div class="trophy">✅</div>
+      <h2>Topic Complete!</h2>
+      <p>You have finished <strong>${ch.topics[nextIdx - 1]}</strong>. Ready to move on to the next topic?</p>
+      <div style="background:var(--teal-light);border-radius:var(--radius-sm);padding:1.5rem 2rem;display:inline-block;margin-bottom:2.5rem">
+        <p style="color:var(--teal-dark);font-weight:600;margin:0">Next: ${ch.topics[nextIdx]}</p>
+      </div>
+      <br>
+      <button class="btn-primary" onclick="navToTopic(${state.currentChapter}, ${nextIdx})">Start Next Topic →</button>
+    </div>`;
+}
+
+function showChapterComplete() {
+  const ch = CURRICULUM[state.currentChapter];
+  const scores = ch.topics.map((_, i) => state.topicScores[topicKey(ch.id, i)]);
+  const totalScore = scores.reduce((s, sc) => s + (sc ? sc.score : 0), 0);
+  const totalMax = scores.reduce((s, sc) => s + (sc ? sc.total : 16), 0);
+  const avgPct = totalMax > 0 ? Math.round((totalScore / totalMax) * 100) : 0;
+  
+  const nextChIdx = state.currentChapter + 1;
+  const hasNext = nextChIdx < CURRICULUM.length;
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="chapter-complete">
+      <div class="trophy">🏆</div>
+      <h2>Chapter ${ch.id} Complete!</h2>
+      <p>Congratulations! You have completed all ${ch.topics.length} topics in <strong>${ch.title}</strong>.</p>
+      <div class="chapter-stats">
+        <div class="cs-item"><div class="cs-num">${ch.topics.length}</div><div class="cs-label">Topics Done</div></div>
+        <div class="cs-item"><div class="cs-num">${totalScore}</div><div class="cs-label">Total Score</div></div>
+        <div class="cs-item"><div class="cs-num">${avgPct}%</div><div class="cs-label">Avg Score</div></div>
+      </div>
+      ${hasNext ? `
+        <button class="btn-primary" onclick="startNextChapter(${nextChIdx})">Continue to Chapter ${nextChIdx + 1} →</button>
+        <br><br>
+        <button class="btn-secondary" style="margin-top:0.5rem" onclick="showChapterOverview(${state.currentChapter})">Review This Chapter</button>
+      ` : allChaptersComplete() ? `
+        <div style="margin-bottom:2rem;padding:1.5rem;background:linear-gradient(135deg,var(--amber-light),var(--teal-light));border-radius:var(--radius-sm)">
+          <p style="font-weight:600;color:var(--ink);margin:0">🎉 You have completed ALL chapters! Unlock the Final Review.</p>
+        </div>
+        <button class="btn-primary" onclick="startFinalReview()">Begin Final Review (200 Questions) →</button>
+      ` : ''}
+    </div>`;
+  
+  if (hasNext) renderSidebar();
+}
+
+function startNextChapter(idx) {
+  state.currentChapter = idx;
+  state.currentTopic = 0;
+  renderSidebar();
+  showChapterOverview(idx);
+}
+
+// ─── FINAL REVIEW ──────────────────────────────────────
+async function startFinalReview() {
+  state.currentView = 'finalReview';
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="final-review-intro">
+      <div class="final-badge">★ Final Comprehensive Review</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:1rem">200-Question Final Exam</h2>
+      <p style="color:var(--slate);max-width:500px;margin:0 auto 2rem">
+        This comprehensive review covers all 13 chapters and 76 topics. Take your time — this is your final assessment.
+      </p>
+      <div class="spinner" style="width:40px;height:40px;border-width:3px;margin:0 auto 1rem"></div>
+      <p style="color:var(--slate);font-style:italic">Generating 200 questions across all chapters… this may take a moment.</p>
+    </div>`;
+  
+  try {
+    const questions = await generateFinalReview();
+    if (questions.length < 10) throw new Error('Too few questions');
+    state.finalQuestions = questions;
+    state.finalAnswers = [];
+    state.finalQuestionIndex = 0;
+    state.finalScore = 0;
+    renderFinalQuestion();
+  } catch(e) {
+    document.getElementById('mainContent').innerHTML = `
+      <div class="text-center" style="padding:4rem">
+        <p style="color:var(--rose);margin-bottom:1rem">Could not generate final review. Please check your connection and try again.</p>
+        <button class="btn-primary" onclick="startFinalReview()">Retry</button>
+      </div>`;
+  }
+}
+
+function renderFinalQuestion() {
+  const q = state.finalQuestions[state.finalQuestionIndex];
+  const total = state.finalQuestions.length;
+  const current = state.finalQuestionIndex + 1;
+  const pct = Math.round(((current-1) / total) * 100);
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="quiz-header">
+      <div class="quiz-title" style="font-size:1.3rem">Final Review</div>
+      <div style="min-width:200px">
+        <div class="quiz-progress-bar"><div class="quiz-progress-fill" style="width:${pct}%"></div></div>
+        <div class="quiz-counter">Question ${current} of ${total}</div>
+      </div>
+    </div>
+    <div class="question-card">
+      <div class="question-num">Question ${current} / ${total}</div>
+      <div class="question-text">${q.q}</div>
+      <div class="options-grid">
+        ${q.opts.map((opt, i) => `
+          <button class="option-btn" id="fopt-${i}" onclick="selectFinalAnswer(${i})">
+            <span class="opt-letter">${'ABCD'[i]}</span>
+            <span>${opt}</span>
+          </button>`).join('')}
+      </div>
+      <div class="feedback-box" id="finalFeedback"></div>
+    </div>
+    <button class="btn-primary hidden" id="finalNextBtn" onclick="nextFinalQuestion()">
+      ${state.finalQuestionIndex < state.finalQuestions.length - 1 ? 'Next →' : 'View Final Results →'}
+    </button>`;
+}
+
+function selectFinalAnswer(idx) {
+  const q = state.finalQuestions[state.finalQuestionIndex];
+  const correct = q.ans;
+  
+  q.opts.forEach((_, i) => {
+    const btn = document.getElementById(`fopt-${i}`);
+    btn.disabled = true;
+    if (i === correct) btn.classList.add('correct');
+    else if (i === idx && idx !== correct) btn.classList.add('wrong');
+  });
+  
+  const isCorrect = idx === correct;
+  if (isCorrect) state.finalScore++;
+  state.finalAnswers.push({ chosen: idx, correct: isCorrect });
+  
+  const fb = document.getElementById('finalFeedback');
+  fb.classList.add('show');
+  fb.classList.add(isCorrect ? 'correct' : 'wrong');
+  fb.textContent = isCorrect ? '✓ Correct!' : `✗ Incorrect. Correct answer: ${q.opts[correct]}`;
+  
+  document.getElementById('finalNextBtn').classList.remove('hidden');
+}
+
+function nextFinalQuestion() {
+  if (state.finalQuestionIndex < state.finalQuestions.length - 1) {
+    state.finalQuestionIndex++;
+    renderFinalQuestion();
+  } else {
+    showFinalResults();
+  }
+}
+
+function showFinalResults() {
+  const score = state.finalScore;
+  const total = state.finalQuestions.length;
+  const pct = Math.round((score / total) * 100);
+  
+  let grade, msg, circleClass;
+  if (pct >= 80) { grade = 'Distinction'; msg = 'Exceptional performance! You have mastered this course.'; circleClass = 'excellent'; }
+  else if (pct >= 70) { grade = 'Credit'; msg = 'Very good performance. You show strong command of the material.'; circleClass = 'good'; }
+  else if (pct >= 50) { grade = 'Pass'; msg = 'You have passed the final review. Keep practicing to improve.'; circleClass = 'fair'; }
+  else { grade = 'Below Pass'; msg = 'Review the chapters and try again. Focus on areas where you struggled.'; circleClass = 'poor'; }
+  
+  document.getElementById('mainContent').innerHTML = `
+    <div class="results-card" style="max-width:700px;margin:0 auto">
+      <div class="final-badge" style="margin-bottom:1.5rem">★ Final Results</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;margin-bottom:1.5rem">Course Complete!</h2>
+      <div class="score-circle ${circleClass}" style="width:160px;height:160px">
+        <div class="score-num" style="font-size:2.8rem">${score}</div>
+        <div class="score-denom">out of ${total}</div>
+      </div>
+      <div class="results-title" style="font-size:2rem;margin-top:1rem">${grade}</div>
+      <p class="results-msg">${msg}<br><br><strong>${pct}%</strong> — ${score} correct out of ${total} questions.</p>
+      <div class="chapter-stats" style="justify-content:center;margin:1.5rem 0">
+        <div class="cs-item"><div class="cs-num">${score}</div><div class="cs-label">Correct</div></div>
+        <div class="cs-item"><div class="cs-num">${total - score}</div><div class="cs-label">Incorrect</div></div>
+        <div class="cs-item"><div class="cs-num">${pct}%</div><div class="cs-label">Score</div></div>
+      </div>
+      <div class="results-actions">
+        <button class="btn-secondary" onclick="startFinalReview()">Retake Final Review</button>
+        <button class="btn-primary" onclick="showChapterOverview(0)">Review Chapters</button>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+
+function startApp() {
+  const name = document.getElementById('studentName').value.trim();
+  if (!name) { alert('Please enter your name to begin.'); return; }
+  state.studentName = name;
+  
+  document.getElementById('splash').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('headerStudentName').textContent = name;
+  
+  renderSidebar();
+  updateHeaderProgress();
+  showChapterOverview(0);
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && document.getElementById('splash').style.display !== 'none') {
+    startApp();
+  }
+});
+</script>
+</body>
+</html>
